@@ -157,6 +157,10 @@ public class Data{
 		this._dataAttributes = fields;
 	}
 	
+	public Iterable<Class<? extends Attribute>> getFields() {
+		return _dataAttributes;
+	}
+	
 	//to enable cloning of data for other tasks
 	public String getInputFilePath() {
 		return this.inputFile;
