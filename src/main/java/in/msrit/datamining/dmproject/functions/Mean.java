@@ -6,6 +6,13 @@ import java.util.Map;
 import in.msrit.datamining.dmproject.Data;
 import in.msrit.datamining.dmproject.Task;
 
+/**
+ * Calculates Mean of n varibles
+ * 
+ * @author humus
+ *
+ */
+
 public class Mean implements Task{
 
 	int fields[];

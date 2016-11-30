@@ -6,26 +6,59 @@ import java.util.Map;
 import in.msrit.datamining.dmproject.Data;
 import in.msrit.datamining.dmproject.Task;
 
-public class CoVariance implements Task{
+/**
+ * Calculates Covariance between 2 variables
+ * 
+ * @author humus
+ *
+ */
+
+public class CoVariance implements Task {
 
 	int fields[];
-	Map<Integer, Float> covariance = new HashMap<Integer, Float>();
+	float covariance;
 
 	@Override
 	public void doTask(Data input) throws Exception {
-		// TODO Auto-generated method stub
+		if (fields == null) {
+			throw new NullPointerException("Please initialize fields");
+		}
+		if (this.fields.length > 2) {
+			throw new ArrayStoreException("Expecting only 2 fields to calculate Covariance");
+		}
 		String inputFile = input.getInputFilePath();
+		
+		//Duplicating the input
+		Data meanData = new Data();
+		meanData.setInputPath(inputFile);
+		
+		//Calculating means for the 2 variables
+		Mean m = new Mean();
+		m.setFields(fields);
+		m.doTask(meanData);
+		float meanX,meanY;
+		Map<Integer, Float> mean = m.getMean();
+		meanX = mean.get(fields[0]);
+		meanY = mean.get(fields[1]);
+		
+		//calulating covariance
+		while(input.next()) {
+			float x = ((Float)input.getByColumn(fields[0]).getValue()).floatValue();
+			float y = ((Float)input.getByColumn(fields[1]).getValue()).floatValue();
+			covariance += (x-meanX) * (y-meanY);
+		}
+		covariance /=input.getCurrentTransactionNumber()-1;
 	}
 
 	@Override
 	public void setFields(int[] fields) {
 		this.fields = fields;
 		for (int i : fields) {
-			covariance.put(new Integer(i), new Float(0));
+			covariance = 0;
 		}
 	}
 	
-	public Map<Integer, Float> getVariance() {
+	public float getCoVariance() {
 		return covariance;
 	}
 	
@@ -33,7 +66,7 @@ public class CoVariance implements Task{
 	public void setField(int field) {
 		int fields[]= {field};
 		this.fields = fields;
-		covariance.put(new Integer(field), new Float(0));
+		covariance = 0;
 		
 	}
 

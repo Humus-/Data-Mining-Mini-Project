@@ -18,7 +18,7 @@ public class Data{
 	private List<Attribute> _currentTransaction;
 	private String inputFile;
 
-	Data() {
+	public Data() {
 		_dataAttributes = new ArrayList<Class<? extends Attribute>>();
 		_currentTransaction = new ArrayList<Attribute>();
 		_entryNumber = 0;
@@ -82,7 +82,7 @@ public class Data{
 	 * 
 	 * @param column
 	 *            : Get the element by its column number in the transaction
-	 *            currently being accessed
+	 *            currently being accessed (1 indexed)
 	 * @throws NoSuchFieldException if Input path is not set using setInputPath
 	 */
 	public Attribute getByColumn(int column) throws NoSuchFieldException {
