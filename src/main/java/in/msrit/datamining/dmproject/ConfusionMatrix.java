@@ -31,7 +31,7 @@ public class ConfusionMatrix {
 	
 	public void createConfusionMatrix() {
 		Scanner s = new Scanner(System.in);
-		System.out.println("asdf");
+		//System.out.println("asdf");
 		this.TruePositive = s.nextLong();
 		this.FalseNegative = s.nextLong();
 		this.FalsePositive = s.nextLong();
