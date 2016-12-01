@@ -66,6 +66,11 @@ public class ContingencyTableGenerator implements Task {
 			return NumofX() + NumofY();
 		}
 		
+		@Override
+		public String toString() {
+			return xAndY+" "+xNotY+"\n"+NotxY+" "+NotxNotY;
+		}
+		
 	}
 	
 	int fields[];
