@@ -2,6 +2,7 @@ package in.msrit.datamining.dmproject.functions;
 
 import java.util.Iterator;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
 import in.msrit.datamining.dmproject.Attribute;
@@ -45,7 +46,7 @@ public class ContingencyTableGenerator implements Task {
 		//bx and by are true if x and y belong to that transaction resp
 		void setByBool(boolean bx, boolean by) {
 			if (bx && !by)
-				incrementXbarYbar(1);
+				incrementXYbar(1);
 			else if (bx && by)
 				incrementXY(1);
 			else if (!bx && by)
@@ -85,10 +86,10 @@ public class ContingencyTableGenerator implements Task {
 			throw new ArrayStoreException("Expecting only 2 fields to calculate Covariance");
 		}
 		// checking if fields are binomial
-		Class<? extends Attribute> a = Iterators.get((Iterator<Class<? extends Attribute>>) input.getFields(),
-				fields[0]);
-		Class<? extends Attribute> b = Iterators.get((Iterator<Class<? extends Attribute>>) input.getFields(),
-				fields[1]);
+		Class<? extends Attribute> a = Iterables.get((Iterable<Class<? extends Attribute>>) input.getFields(),
+				fields[0]-1);
+		Class<? extends Attribute> b = Iterables.get((Iterable<Class<? extends Attribute>>) input.getFields(),
+				fields[1]-1);
 		
 		if (!(a.getName() == Binary.class.getName())) {
 			throw new IllegalAccessException("Invalid Attribute Type.Need Binomial");
@@ -100,6 +101,7 @@ public class ContingencyTableGenerator implements Task {
 		while(input.next()) {
 			boolean x = (Boolean)input.getByColumn(fields[0]).getValue();
 			boolean y = (Boolean)input.getByColumn(fields[1]).getValue();
+			
 			ct.setByBool(x, y);
 		}
 		
